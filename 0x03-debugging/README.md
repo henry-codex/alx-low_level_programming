@@ -1,0 +1,1 @@
+Debugging is the act of identifying and resolving errors in software that cause it to not function properly. As you advance in programming and become a professional engineer, you will gain expertise in using debugging tools like gdb or IDE debugging features. Nonetheless, it's crucial to comprehend the fundamentals and techniques of manual debugging
