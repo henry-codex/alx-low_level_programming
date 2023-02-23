@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 /**
  * print_diagonal -draws a diagonal line on the terminal
  * @n: the number of times that the special character must be print
