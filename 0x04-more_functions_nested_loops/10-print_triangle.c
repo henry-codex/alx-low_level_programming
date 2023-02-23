@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 /**
  * print_triangle - print a triangle
  * @size: the size of the triangle
