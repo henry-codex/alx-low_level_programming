@@ -7,8 +7,9 @@
  * @s2: The second string to concatenate.
  * @n: The maximum number of bytes to concatenate from s2.
  *
- * Return: A pointer to the newly-allocated memory containing the concatenated strings.
- *         If malloc fails to allocate the requested memory, the function sets the status value to 98.
+ * Return: A pointer to the newly-allocated memory.
+ *         If malloc fails to allocate the requested memory,
+ *	 the function sets the status value to 98
  */
 
 char *string_nconcat(char *s1, char *s2, unsigned int n)
