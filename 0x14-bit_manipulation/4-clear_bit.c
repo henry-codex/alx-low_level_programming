@@ -20,7 +20,6 @@ int clear_bit(unsigned long int *n, unsigned int index)
 	/* Loop through each bit of the number up to the given index */
 	while (bit_index <= index)
 	{
-		/* Clear the bit at the given index by bitwise ANDing with a mask that has a 0 in the index */
 		*n &= ~(1UL << index);
 		bit_index++;
 	}
