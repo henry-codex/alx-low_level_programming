@@ -1,60 +1,46 @@
 #include "main.h"
 
 /**
- * create_file - Creates a file and writes a given text content to it.
+ * read_textfile - reads a text file and prints it to the POSIX standard output
+ * @filename: the file to read
+ * @letters: the number of characters to read and print
  *
- * @filename: A pointer to the name of the file to create.
- * @text_content: A pointer to a string to write to the file.
- *
- * Return: On success, 1.
- *         On failure, -1.
+ * Return: the number of letters read and printed, or 0 if an error occurred
  */
-int create_file(const char *filename, char *text_content)
+ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int file_descriptor, bytes_written, text_len = 0;
+	char *buf;
+	int fd, nr, wr;
 
-	if (filename == NULL)
-		return (-1);
+	buf = malloc(sizeof(char) * letters);
+	if (filename == NULL || buf == NULL)
+		return (0);
 
-	if (text_content != NULL)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
-		text_len = get_text_len(text_content);
+		free(buf);
+		return (0);
 	}
 
-	file_descriptor = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
-
-	if (file_descriptor == -1)
-		return (-1);
-
-	bytes_written = write(file_descriptor, text_content, text_len);
-
-	if (bytes_written == -1 || bytes_written != text_len)
+	nr = read(fd, buf, letters);
+	if (nr == -1)
 	{
-		close(file_descriptor);
-		return (-1);
+		free(buf);
+		close(fd);
+		return (0);
 	}
 
-	close(file_descriptor);
-
-	return (1);
-}
-
-/**
- * get_text_len - Calculates the length of a given string.
- *
- * @text: A pointer to a string.
- *
- * Return: The length of the string.
- */
-int get_text_len(char *text)
-{
-	int len = 0;
-
-	while (text[len] != '\0')
+	wr = write(STDOUT_FILENO, buf, nr);
+	if (wr == -1)
 	{
-		len++;
+		free(buf);
+		close(fd);
+		return (0);
 	}
 
-	return (len);
+	free(buf);
+	close(fd);
+	return (wr);
 }
 
