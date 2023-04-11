@@ -166,10 +166,10 @@ void check_sys(char *ptr)
 	print_magic(ptr);
 
 	if (sys == '1')
-		printf("  Class:ELF32\n");
+		printf("  Class:                             ELF32\n");
 
 	if (sys == '2')
-		printf("  Class:ELF64\n");
+		printf("  Class:                             ELF64\n");
 
 	print_data(ptr);
 	print_version(ptr);
@@ -196,8 +196,8 @@ int check_elf(char *ptr)
 }
 
 /**
- * main - check the code.
- * @argc: number of arguments made.
+ * main - check the code for Holberton School students.
+ * @argc: number of arguments.
  * @argv: arguments vector.
  * Return: Always 0
  */
@@ -240,4 +240,3 @@ int main(int argc, char *argv[])
 
 	return (0);
 }
-
