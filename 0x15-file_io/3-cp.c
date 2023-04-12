@@ -9,15 +9,15 @@
  */
 char *create_buffer(void)
 {
-	char *buffer;
+    char *buffer;
 
-	buffer = malloc(sizeof(char) * 1024);
-	if (buffer == NULL)
-	{
-		perror("Error: Can't allocate memory");
-		exit(EXIT_FAILURE);
-	}
-	return (buffer);
+    buffer = malloc(sizeof(char) * 1024);
+    if (buffer == NULL)
+    {
+        perror("Error: Can't allocate memory");
+        exit(EXIT_FAILURE);
+    }
+    return (buffer);
 }
 
 /**
@@ -30,16 +30,16 @@ char *create_buffer(void)
  */
 void close_files(int fd1, int fd2)
 {
-	if (close(fd1) == -1)
-	{
-	perror("Error: Can't close the first file");
-		exit(EXIT_FAILURE);
-	}
-	if (close(fd2) == -1)
-	{
-		perror("Error: Can't close the second file");
-		exit(EXIT_FAILURE);
-	}
+    if (close(fd1) == -1)
+    {
+        perror("Error: Can't close the first file");
+        exit(EXIT_FAILURE);
+    }
+    if (close(fd2) == -1)
+    {
+        perror("Error: Can't close the second file");
+        exit(EXIT_FAILURE);
+    }
 }
 
 /**
@@ -57,63 +57,64 @@ void close_files(int fd1, int fd2)
  */
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to, n_read, n_write;
-	char *buffer;
+    int fd_from, fd_to, n_read, n_write;
+    char *buffer;
 
-/* Check for correct argument count */
-	if (argc != 3)
-	{
-		fprintf(stderr, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
+    /* Check for correct argument count */
+    if (argc != 3)
+    {
+        fprintf(stderr, "Usage: cp file_from file_to\n");
+        exit(97);
+    }
 
-/* Allocate memory for buffer */
-	buffer = create_buffer();
+    /* Allocate memory for buffer */
+    buffer = create_buffer();
 
-/* Open the source file for reading */
-	fd_from = open(argv[1], O_RDONLY);
-	if (fd_from == -1)
-	{
-		perror("Error: Can't read from the source file");
-		free(buffer);
-		exit(98);
-	}
+    /* Open the source file for reading */
+    fd_from = open(argv[1], O_RDONLY);
+    if (fd_from == -1)
+    {
+        perror("Error: Can't read from the source file");
+        free(buffer);
+        exit(98);
+    }
 
-/* Open the destination file for writing */
-	fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (fd_to == -1)
-	{
-	perror("Error: Can't write to the destination file");
-		free(buffer);
-		close_files(fd_from, fd_to);
-	exit(99);
-	}
+    /* Open the destination file for writing */
+    fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    if (fd_to == -1)
+    {
+        perror("Error: Can't write to the destination file");
+        free(buffer);
+        close(fd_from);
+        exit(99);
+    }
 
-	/* Read from the source file and write to the destination file */
-	while ((n_read = read(fd_from, buffer, 1024)) > 0)
-	{
-	n_write = write(fd_to, buffer, n_read);
-	if (n_write == -1)
-		{
-		perror("Error: Can't write to the destination file");
-		free(buffer);
-		close_files(fd_from, fd_to);
-		exit(99);
-		}
-	}
-/* Check for read error */
-	if (n_read == -1)
-	{
-		perror("Error: Can't read from the source file");
-		free(buffer);
-		close_files(fd_from, fd_to);
-		exit(98);
-	}
+    /* Read from the source file and write to the destination file */
+    while ((n_read = read(fd_from, buffer, 1024)) > 0)
+    {
+        n_write = write(fd_to, buffer, n_read);
+        if (n_write == -1)
+        {
+            perror("Error: Can't write to the destination file");
+            free(buffer);
+            close_files(fd_from, fd_to);
+            exit(99);
+        }
+    }
 
-	/* Close the files and free the buffer */
+    /* Check for read error */
+    if (n_read == -1)
+    {
+        perror("Error: Can't read from the source file");
+        free(buffer);
+        close_files(fd_from, fd_to);
+        exit(98);
+    }
+
+/* Close the files and free the */
+
 	free(buffer);
 	close_files(fd_from, fd_to);
 
-	return (0);
+	return (0)
 }
-
